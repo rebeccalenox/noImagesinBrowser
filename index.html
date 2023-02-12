@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+ <head>
+ <meta charset="utf-8"  />
+ <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+ <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+ <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+ <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+ <script src="jquery.ui.touch-punch.min.js"></script>
+ <script src="jquery.js" type="text/javascript"></script>
+ <script src="jquery.alerts.js" type="text/javascript"></script>
+ <link href="jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
+ <link rel="stylesheet" type="text/css" href="styles.css">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Measure of the angle</title>
+ <script> 
+ 
+var numCorrect = 0;
+var numTries = 0;
+
+
+startday = new Date();
+clockStart = startday.getTime();
+function initStopwatch() {
+var myTime = new Date();
+return((myTime.getTime() - clockStart)/1000);
+}
+function getSecs() {
+    var tSecs = Math.round(initStopwatch());
+    var iSecs = tSecs % 60;
+    var iMins = Math.round((tSecs-30)/60);
+    var sSecs ="" + ((iSecs > 9) ? iSecs : "0" + iSecs);
+    var sMins ="" + ((iMins > 9) ? iMins : "0" + iMins);
+    document.getElementById("timespent").value = sMins+":"+sSecs;
+    window.setTimeout('getSecs()',1000);
+}
+
+function winner(){
+var tSecs = Math.round(initStopwatch());
+    var iSecs = tSecs % 60;
+    var iMins = Math.round((tSecs-30)/60);
+   var sSecs ="" + ((iSecs > 9) ? iSecs : "0" + iSecs);
+  var sMins ="" + ((iMins > 9) ? iMins : "0" + iMins);
+  var accur = Math.round(numCorrect/numTries * 100);
+	alert("Done in " + sMins + " minutes and " + sSecs + " seconds! " + " Accuracy: " + accur + " %");
+	}
+ 
+ var tiles = ["00.png","01.png","02.png","03.png","04.png","05.png","06.png","07.png","08.png","09.png","10.png","11.png","12.png","13.png","14.png"];  
+ var tilesB = ["r0.png","r1.png","r2.png","r3.png","r4.png","r5.png","r6.png","r7.png","r8.png","r9.png","r10.png","r11.png","r12.png","r13.png","r14.png"];
+ var pieces = []; 
+ var selected = undefined; 
+ var matches = 0; 
+ $(document).ready(function() { 
+ // prepare the tiles 
+ for(var i=0;i<tiles.length;i++) { 
+ var img = $(document.createElement('img')); 
+ img.attr('src', 'img/' + tiles[i]); 
+ img.attr('id', 'img' + i ); 
+ img.toggleClass('carda'); 
+ img.toggleClass('unselected'); 
+ pieces.push(img); 
+ var img = $(document.createElement('img')); 
+ img.attr('src', 'img/' + tilesB[i]);
+ img.attr('id', 'img' + i ); 
+  img.toggleClass('cardb'); 
+ img.toggleClass('unselected'); 
+ pieces.push(img); 
+ } 
+  
+ // random sort the tiles 
+ pieces.sort(function() { 
+ return (Math.round(Math.random())-0.5); 
+ }); 
+  
+ for(var i=0;i<pieces.length;i++) { 
+ var img = $(pieces[i]); 
+ img.click(tile_click); 
+  
+ //if(i % 6 == 0) img.css('clear', 'both'); 
+  
+ $('#tiles').append(img); 
+ } 
+ }); 
+  
+ function tile_click() { 
+ var img = $(this); 
+ flip(img); 
+ if(selected && selected.hasClass('selected')) { 
+  numTries++;
+ if(selected.attr('id') == img.attr('id') ) 
+ { 
+ selected.toggleClass('selected'); 
+ img.toggleClass('selected'); 
+ selected.toggleClass('matched'); 
+ img.toggleClass('matched'); 
+ numCorrect++;
+ timeoutId = setInterval('remove();', 1000); 
+  if(numCorrect == tiles.length) { 
+ winner(); 
+ } 
+ } else { 
+ 
+ setTimeout(function() { 
+ flip(selected); 
+ flip(img); 
+ selected = undefined; 
+ 
+ }, 1500); 
+ } 
+ } else { 
+ selected = $(this); 
+ } 
+ } 
+  
+ function flip(tile){ 
+ tile.toggleClass('selected'); 
+ tile.toggleClass('unselected'); 
+ } 
+  
+ var timeoutId; 
+ function remove() { 
+ $('.matched').remove();
+ clearInterval(timeoutId); 
+ } 
+ </script>
+ <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+ <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+ <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+ </head> 
+ <body onLoad="window.setTimeout('getSecs()',1)" > 
+<div id="topline">
+<h2 style="font-family: Consolas, 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', Monaco, 'Courier New', monospace"> Match the angle shown with its degree measurement</h2>
+<form > 
+  Time Spent:<input size="8" id="timespent" name="timespent">
+ 
+</form>
+</div>
+ <div class = "wrap" id="tiles" > 
+ </div> 
+<div class = "footer">
+<h4>  Mrs Lenox  Match the angle with its degree measurement.   Last Updated:Jan 2020 </h4>	  
+</div>
+ </body> 
+ </html> 

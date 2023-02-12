@@ -1,0 +1,57 @@
+@charset "utf-8";
+/* CSS Document */
+
+ body {
+ background-color: #fdc6c6;
+	
+}
+ 
+ #topline
+		  {
+	
+	background: #99a8ea;
+	font-family: arial, verdana;
+	font-size: 1.3em;
+	color: red;
+		
+}
+		  
+ .wrap{
+            display: table-row-group; background:  #de7979;
+         }
+         
+.footer{
+		  background: #1430B1 ; font-family: arial, verdana;  font-size:1.0em; color:red;}		 
+ .matched { 
+ background-color: #00FF00; 
+ border: double 7px #00FF00; 
+ margin: 1px; 
+ } 
+  
+ .selected { 
+ background-color: #EB1DEA; 
+ border: double 7px #F8DC4A; 
+ margin: 1px; 
+ } 
+ 
+ 
+ .unselected { 
+ margin: 8px; 
+ } 
+   .carda { 
+ width: 120px; 
+ height: 120px; 
+ float: left; 
+ } 
+ 
+ .cardb { 
+ width: 120px; 
+ height: 120px; 
+ float: left; 
+ } 
+
+ 
+ 
+input, select, textarea {
+font-size: 100%;
+}
